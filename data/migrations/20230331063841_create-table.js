@@ -20,7 +20,7 @@ exports.up = function(knex) {
         t.string("task_description").notNullable()
         t.string("task_notes")
         t.boolean("task_completed").defaultTo(false)
-        t.integer("project_id").unsigned().notNullable()
+        t.integer("project_id").unsigned().notNullable() //Burasıyla ilişkili olan diğer tablodaki bilgiyide siler
     })
     .createTable("project_resources",t=>{
         t.increments("project_resources_id")
@@ -35,7 +35,7 @@ exports.up = function(knex) {
  */
 exports.down = function(knex) {
   return knex.schema
-  .dropTableIfExists("project_resources")
+  .dropTableIfExists("project_resources") //tabloyu komple yok ediyor.o yüzden sırası önemli değil
   .dropTableIfExists("tasks")
   .dropTableIfExists("resources")
   .dropTableIfExists("projects")

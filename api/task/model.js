@@ -1,8 +1,8 @@
 // bu`Task` modeli buraya
 const db = require("../../data/dbConfig");
 
-const find = () => {
-  return db("tasks as t")
+const find =async () => {
+  let allTasks=await db("tasks as t")
     .leftJoin("projects as p", "p.project_id", "t.project_id")
     .select(
       "t.task_id",
@@ -12,10 +12,19 @@ const find = () => {
       "p.project_name",
       "p.project_description"
     );
+    
+    let transformedTask=await allTasks.map((item)=>{
+      return {
+        ...item,
+        task_completed:item.task_completed===1
+      }
+    })
+
+    return transformedTask
 };
 
-const findById = (id) => {
-  return db("tasks as t")
+const findById =async (id) => {
+  let idTask=await db("tasks as t")
     .leftJoin("projects as p", "p.project_id", "t.project_id")
     .select(
       "t.task_id",
@@ -25,6 +34,12 @@ const findById = (id) => {
       "t.project_id"
     )
     .where("task_id", id).first()
+
+    let transformedIdTask={
+       ...idTask,
+        task_completed:idTask.task_completed ===1
+    }
+    return transformedIdTask
 };
 
 const findByProjectId = (projectId) => {

@@ -2,16 +2,28 @@
 const db=require("../../data/dbConfig")
 
 
-const find=()=>{
-    return db("projects")
+const find=async()=>{
+    let allProjects=await db("projects")
+    let transformedProjects=await allProjects.map((row)=>{
+        return {
+            ...row,
+            project_completed:row.project_completed ===1
+        }
+    })
+    return transformedProjects
 }
 
-const findById=(id)=>{
-    return db("projects").where("project_id",id).first()
+const findById=async(id)=>{
+    let idProject=await db("projects").where("project_id",id).first()
+    let transformedIdProject={
+       ...idProject,
+        project_completed:idProject.project_completed ===1
+    }
+    return transformedIdProject
 }
 
-const create=(resource)=>{
-    return db("projects").insert(resource).then(([id]) => findById(id))
+const create=(project)=>{
+    return db("projects").insert(project).then(([id]) => findById(id))
 }
 
 module.exports={

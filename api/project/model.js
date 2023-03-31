@@ -15,11 +15,9 @@ const find=async()=>{
 
 const findById=async(id)=>{
     let idProject=await db("projects").where("project_id",id).first()
-    let transformedIdProject={
-       ...idProject,
-        project_completed:idProject.project_completed ===1
-    }
-    return transformedIdProject
+    idProject.project_completed=idProject.project_completed ===1
+   
+    return idProject
 }
 
 const create=(project)=>{

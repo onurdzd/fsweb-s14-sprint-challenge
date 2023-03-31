@@ -20,12 +20,12 @@ exports.up = function(knex) {
         t.string("task_description").notNullable()
         t.string("task_notes")
         t.boolean("task_completed").defaultTo(false)
-        t.integer("project_id").unsigned().notNullable() //Burasıyla ilişkili olan diğer tablodaki bilgiyide siler
+        t.integer("project_id").unsigned().notNullable() 
     })
     .createTable("project_resources",t=>{
         t.increments("project_resources_id")
-        t.integer("project_id").unsigned().references("project_id").inTable("projects")
-        t.integer("resource_id").unsigned().references("resource_id").inTable("resources")
+        t.integer("project_id").unsigned().references("project_id").inTable("projects").onUpdate("CASCADE").onDelete("CASCADE") //Burasıyla ilişkili olan diğer tablodaki bilgiyide siler
+        t.integer("resource_id").unsigned().references("resource_id").inTable("resources").onUpdate("CASCADE").onDelete("CASCADE")
     })
 };
 
@@ -35,7 +35,7 @@ exports.up = function(knex) {
  */
 exports.down = function(knex) {
   return knex.schema
-  .dropTableIfExists("project_resources") //tabloyu komple yok ediyor.o yüzden sırası önemli değil
+  .dropTableIfExists("project_resources") 
   .dropTableIfExists("tasks")
   .dropTableIfExists("resources")
   .dropTableIfExists("projects")

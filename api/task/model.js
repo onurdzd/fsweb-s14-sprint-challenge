@@ -35,11 +35,9 @@ const findById =async (id) => {
     )
     .where("task_id", id).first()
 
-    let transformedIdTask={
-       ...idTask,
-        task_completed:idTask.task_completed ===1
-    }
-    return transformedIdTask
+    idTask.task_completed=idTask.task_completed ===1
+   
+    return idTask
 };
 
 const findByProjectId = (projectId) => {

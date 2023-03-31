@@ -20,7 +20,7 @@ exports.up = function(knex) {
         t.string("task_description").notNullable()
         t.string("task_notes")
         t.boolean("task_completed").defaultTo(false)
-        t.integer("project_id").unsigned().references("project_id").inTable("projects")
+        t.integer("project_id").unsigned().notNullable()
     })
     .createTable("project_resources",t=>{
         t.increments("project_resources_id")

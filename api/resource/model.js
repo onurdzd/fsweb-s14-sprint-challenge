@@ -9,8 +9,12 @@ const findById=(id)=>{
     return db("resources").where("resource_id",id).first()
 }
 
+const findByName=(name)=>{
+    return db("resources").where("resource_name",name).first()
+}
+
 const create=(resource)=>{
     return db("resources").insert(resource).then(([id]) => findById(id))
 }
 
-module.exports={find,create,findById}
+module.exports={find,create,findById,findByName}

@@ -15,7 +15,7 @@ exports.up = function(knex) {
         t.string("resource_name").notNullable().unique()
         t.string("resource_description")
     })
-    .createTable("task",t=>{
+    .createTable("tasks",t=>{
         t.increments("task_id")
         t.string("task_description").notNullable()
         t.string("task_notes")
@@ -34,5 +34,9 @@ exports.up = function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = function(knex) {
-  
+  return knex.schema
+  .dropTableIfExists("project_resources")
+  .dropTableIfExists("tasks")
+  .dropTableIfExists("resources")
+  .dropTableIfExists("projects")
 };
